@@ -3,16 +3,23 @@ package com.example.lectia40;
 import jakarta.persistence.*;
 
 @Entity
-public class User {
-    public User(String name, String role){
+public class UserTekwill { // JPA - Contract(Interfata) ,  Hibernate(Impplementare)
+
+
+    public UserTekwill() {}
+
+    public UserTekwill(String name, String role) {
         this.name = name;
         this.role = role;
     }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Column
     private String name;
+
     @Column
     private String role;
 

@@ -8,29 +8,34 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserController { // http://localhost:8080/user/create         { JSON USER }
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private UserService userService;
-    @PostMapping
-    public void createUser(@RequestBody User user){
-        userRepository.save(user);
+
+    @PostMapping("/create")
+    public void createUser(@RequestBody UserTekwill userTekwill) {
+        userRepository.save(userTekwill);
     }
-    @GetMapping
-    public List<User> getAllUsers(){
+
+    @GetMapping("/all")
+    public List<UserTekwill> getAllUsers() {
         return userRepository.findAll();
     }
-    @GetMapping("/paginated")
-    public List<User> getAllUserPaginated(@RequestParam int page,
-                                          @RequestParam int pageSize,
-                                          @RequestParam(defaultValue = "") String name,
-                                          @RequestParam(defaultValue = "") String role,
-                                          @RequestParam(defaultValue = "sortBy") String sortBy){
-        System.out.println(page);
-        System.out.println(pageSize);
-        System.out.println(name);
-        System.out.println(role);
-        return userService.getAllUsersPaginated(page, pageSize, name, role, sortBy);
+
+    @GetMapping("/all/paginated")
+    public Page<UserTekwill> getAllUserPaginated(
+            @RequestParam int page,
+            @RequestParam int pageSize,
+            @RequestParam(defaultValue = "") String name,
+            @RequestParam(defaultValue = "") String role,
+            @RequestParam(defaultValue = "name") String sortBy,
+            @RequestParam(defaultValue = "ASC") String direction
+    ) {
+        return userService.getAllUsersPaginated(page, pageSize, name, role, sortBy, direction);
     }
+
 }
